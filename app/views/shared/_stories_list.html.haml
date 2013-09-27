@@ -1,0 +1,8 @@
+.span8
+  %h3
+    Own and Following Stories (#{@following_stories.count})
+  - if @following_stories.any?
+    = will_paginate @following_stories
+    %ol.stories
+      = render partial: 'shared/story', collection: @following_stories
+    = will_paginate @following_stories

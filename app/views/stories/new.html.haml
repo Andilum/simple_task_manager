@@ -1,0 +1,14 @@
+- provide(:title, 'New Story')
+%h1 New Story
+.row
+  .span6.offset3
+    = simple_form_for(@story) do |f|
+      = render 'shared/error_messages', object: f.object
+      = f.label :title
+      = f.text_field :title
+      = f.label :description
+      = f.text_area :description
+      = f.hidden_field :state, :value => "new"
+      = f.label :responsible_user_id
+      = f.collection_select :responsible_user_id, User.all, :id, :name, :include_blank => true
+      = f.submit "Create new story", class: "btn btn-large btn-primary"

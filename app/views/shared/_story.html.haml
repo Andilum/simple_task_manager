@@ -1,0 +1,11 @@
+%li{:id => story.id}
+  %span.content
+    = link_to story.title, story
+    - if current_user?(story.author)
+      | #{link_to "delete", story, method: :delete, data: { confirm: "You sure?" }, title: story.title}
+  %span.timestamp.content
+    Author: #{story.author.name}
+  %span.timestamp.content
+    State: #{story.state}
+  %span.timestamp
+    Posted #{time_ago_in_words(story.created_at)} ago.

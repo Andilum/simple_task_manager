@@ -1,0 +1,57 @@
+- if current_user?(@story.author)
+  .story_info
+    = simple_form_for(@story) do |f|
+      = render 'shared/error_messages', object: f.object
+      = f.label :title
+      = f.text_field :title
+      = f.label :description
+      = f.text_area :description
+      %h4 Author:
+      %span.content
+        %a{:href => user_path(@story.author)}
+          = @story.author.name
+      = f.label :responsible_user_id
+      = f.collection_select :responsible_user_id, User.all, :id, :name, :include_blank => true
+      = f.label :state
+      = f.select :state, options_for_select([["new", "new"], ["started", "started"], ["finished", "finished"], |
+        ["accepted", "accepted"], ["rejected", "rejected"] ], @story.state)                                    |
+      = f.submit "Save changes", class: "btn btn-large btn-primary"
+      = link_to "Delete Story", @story, method: :delete,        |
+        data: { confirm: "You sure?" },                         |
+        title: @story.title, class: "btn btn-large btn-primary" |
+- elsif current_user?(@story.responsible_user)
+  = simple_form_for(@story) do |f|
+    = render 'shared/error_messages', object: f.object
+    %h4 Story Title:
+    %span.content
+      %a{:href => story_path(@story)}= @story.title
+    %h4 Description:
+    %span.content= @story.description
+    %h4 Author:
+    %span.content
+      %a{:href => user_path(@story.author)}
+        = @story.author.name
+    - if @story.responsible_user != nil
+      %h4 Responsible User:
+      %span.content
+        %a{:href => user_path( @story.responsible_user)}= @story.responsible_user.name
+    = f.label :state
+    = f.select :state, options_for_select([["new", "new"], ["started", "started"], ["finished", "finished"], |
+      ["accepted", "accepted"], ["rejected", "rejected"] ], @story.state)                                    |
+    = f.submit "Save changes", class: "btn btn-large btn-primary"
+- else
+  %h4 Story Title:
+  %span.content
+    %a{:href => story_path(@story)}= @story.title
+  %h4 Description:
+  %span.content= @story.description
+  %h4 Author:
+  %span.content
+    %a{:href => user_path(@story.author)}
+      = @story.author.name
+  - if @story.responsible_user != nil
+    %h4 Responsible User:
+    %span.content
+      %a{:href => user_path( @story.responsible_user)}= @story.responsible_user.name
+  %h4 State:
+  %span.content= @story.state

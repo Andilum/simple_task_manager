@@ -1,0 +1,7 @@
+%li{:id => story_comment.id}
+  %span.content= story_comment.content
+  %span.timestamp
+    posted #{time_ago_in_words(story_comment.created_at)} ago by
+    %a{:href => user_path(User.find(story_comment.user_id))}= User.find(story_comment.user_id).name
+    - if current_user?(User.find(story_comment.user_id))
+      | #{link_to "delete", story_comment, method: :delete, data: { confirm: "You sure?" }}

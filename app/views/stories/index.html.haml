@@ -1,0 +1,19 @@
+- provide(:title, 'Stories')
+%h1 Stories
+.row
+  .span6
+    = search_form_for @q do |f|
+      = f.label :author_id
+      = f.collection_select :author_id_eq, User.all, :id, :name, :include_blank => true
+      = f.label :responsible_user_id
+      = f.collection_select :responsible_user_id_eq, User.all, :id, :name, :include_blank => true
+      = f.label :state
+      = f.select :state_eq, options_for_select([["", ""], ["new", "new"], ["started", "started"], ["finished", "finished"], |
+        ["accepted", "accepted"], ["rejected", "rejected"] ], @q.state_eq)                                                  |
+      = f.submit "Search", class: "btn btn-large btn-primary"
+%h3
+  Found #{@stories.count} Stories
+= will_paginate @stories
+%ol.stories
+  = render partial: 'shared/story', collection: @stories
+= will_paginate @stories

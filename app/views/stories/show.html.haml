@@ -1,0 +1,15 @@
+- provide(:title, @story.title)
+.row
+  %aside.span6
+    %section
+      = render 'shared/story_info'
+  %aside.span6
+    - if !@comments_list.nil?
+      %section
+        %div
+          %h4 Comments:
+          %ol.stories
+            = render partial: 'shared/story_comment', collection: @comments_list
+    - if !@story_comment.nil?
+      %section
+        = render 'shared/story_comment_form'

@@ -1,0 +1,9 @@
+- provide(:title, @user.name)
+.row
+  %aside.span4
+    %section
+      = render 'shared/user_info'
+    - if current_user?(@user)
+      = link_to "Add Story +", new_story_path, |
+        class: "btn btn-large btn-primary"     |
+  = render 'shared/stories_list'

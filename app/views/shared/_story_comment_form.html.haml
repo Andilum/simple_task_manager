@@ -1,0 +1,8 @@
+= simple_form_for(@story_comment) do |f|
+  #story_comment_form_error
+    = render 'shared/error_messages', object: f.object
+  .field
+    = f.text_area :content, placeholder: "Compose new comment..."
+    = f.hidden_field :user_id, :value => current_user.id
+    = f.hidden_field :story_id, :value => @story.id
+  = f.submit "Post", class: "btn btn-large btn-primary"

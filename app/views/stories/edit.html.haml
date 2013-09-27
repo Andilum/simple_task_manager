@@ -1,0 +1,16 @@
+- provide(:title, 'Edit Story')
+%h1 Edit Story
+.row
+  .span6.offset3
+    = simple_form_for(@story) do |f|
+      = render 'shared/error_messages', object: f.object
+      = f.label :title
+      = f.text_field :title
+      = f.label :description
+      = f.text_area :description
+      = f.label :state
+      = f.select :state, options_for_select([["new", "new"], ["started", "started"], ["finished", "finished"], |
+        ["accepted", "accepted"], ["rejected", "rejected"] ], @story.state)                                    |
+      = f.label :responsible_user_id
+      = f.collection_select :responsible_user_id, User.all, :id, :name, :include_blank => true
+      = f.submit "Save changes", class: "btn btn-large btn-primary"
